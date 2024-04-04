@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const costumeSchema = mongoose.Schema({
+const racquetSchema = mongoose.Schema({
 Racquet_type: String,
 Racquet_usedfor: String,
 Racquet_cost: Number

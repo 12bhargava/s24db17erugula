@@ -10,6 +10,7 @@ var pickRouter= require('./routes/pick');
 var racquetRouter= require('./routes/racquet');
 var gridRouter= require('./routes/grid');
 var racquet= require("./models/racquet");
+var resourceRouter= require("./routes/resource");
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/pick', pickRouter);
 app.use('/racquet', racquetRouter);
 app.use('/grid', gridRouter);
 app.use('/racquets', racquet);
+app.use('/resource', resourceRouter);
 
 
 
@@ -62,35 +64,35 @@ console.log("Connection to DB succeeded")});
 async function recreateDB(){
 // Delete everything
 await racquet.deleteMany();
+
 let instance1 = new
-racquet({Racquet_type:"ghost", size:'large',
-cost:15.4});
+racquet({Racquet_type:"ghost", Racquet_usedfor:'large',
+Racquet_cost:15.4});
 instance1.save().then(doc=>{
 console.log("First object saved")}
+).catch(err=>{
+console.error(err)
+});
+
+let instance2 = new
+racquet({Racquet_type:"ghost2",Racquet_usedfor:"small",
+Racquet_cost:15.4});
+instance2.save().then(doc=>{
+console.log("second object saved")}
+).catch(err=>{
+console.error(err)
+});
+
+let instance3 = new
+racquet({Racquet_type:"ghost2",Racquet_usedfor:"small",Racquet_cost:10});
+instance3.save().then(doc=>{
+console.log("third object saved")}
 ).catch(err=>{
 console.error(err)
 });
 }
 let reseed = true;
 if (reseed) {recreateDB();}
-
-let instance2 = new
-racquet({Racquet_usedfor:"ghost", size:'large',
-cost:15.4});
-instance1.save().then(doc=>{
-console.log("First object saved")}
-).catch(err=>{
-console.error(err)
-});
-
-let instance3 = new
-racquet({Racquet_cost:"ghost", size:'large',
-cost:15.4});
-instance1.save().then(doc=>{
-console.log("First object saved")}
-).catch(err=>{
-console.error(err)
-});
 
 
 
