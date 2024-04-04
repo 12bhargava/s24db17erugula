@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var pickRouter= require('./routes/pick');
 var racquetRouter= require('./routes/racquet');
 var gridRouter= require('./routes/grid');
+var racquet= require("./models/racquet");
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use('/users', usersRouter);
 app.use('/pick', pickRouter);
 app.use('/racquet', racquetRouter);
 app.use('/grid', gridRouter);
+app.use('/racquets', racquet);
 
 
 
@@ -45,5 +47,51 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+require('dotenv').config();
+const connectionString = process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString);
+
+//Get the default connection
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")});
+//server start
+async function recreateDB(){
+// Delete everything
+await racquet.deleteMany();
+let instance1 = new
+racquet({Racquet_type:"ghost", size:'large',
+cost:15.4});
+instance1.save().then(doc=>{
+console.log("First object saved")}
+).catch(err=>{
+console.error(err)
+});
+}
+let reseed = true;
+if (reseed) {recreateDB();}
+
+let instance2 = new
+racquet({Racquet_usedfor:"ghost", size:'large',
+cost:15.4});
+instance1.save().then(doc=>{
+console.log("First object saved")}
+).catch(err=>{
+console.error(err)
+});
+
+let instance3 = new
+racquet({Racquet_cost:"ghost", size:'large',
+cost:15.4});
+instance1.save().then(doc=>{
+console.log("First object saved")}
+).catch(err=>{
+console.error(err)
+});
+
+
 
 module.exports = app;
