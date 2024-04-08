@@ -24,9 +24,21 @@ exports.racquet_view_all_Page = async function(req, res) {
     };
 
 // for a specific racquet.
-exports.racquet_detail = function(req, res) {
-res.send('NOT IMPLEMENTED: racquet detail: ' + req.params.id);
-};
+// exports.racquet_detail = function(req, res) {
+// res.send('NOT IMPLEMENTED: racquet detail: ' + req.params.id);
+// };
+// for a specific racquet.
+exports.racquet_detail = async function(req, res) {
+    console.log("detail" + req.params.id)
+    try {
+    result = await racquet.findById( req.params.id)
+    res.send(result)
+    } catch (error) {
+    res.status(500)
+    res.send(`{"error": document for id ${req.params.id} not found`);
+    }
+    };
+    
 // Handle racquet create on POST.
 // exports.racquet_create_post = function(req, res) {
 // res.send('NOT IMPLEMENTED: racquet create POST');
@@ -57,6 +69,26 @@ exports.racquet_delete = function(req, res) {
 res.send('NOT IMPLEMENTED: racquet delete DELETE ' + req.params.id);
 };
 // Handle racquet update form on PUT.
-exports.racquet_update_put = function(req, res) {
-res.send('NOT IMPLEMENTED: racquet update PUT' + req.params.id);
+// exports.racquet_update_put = function(req, res) {
+// res.send('NOT IMPLEMENTED: racquet update PUT' + req.params.id);
+// };
+//Handle racquet update form on PUT.
+exports.racquet_update_put = async function(req, res) {
+console.log(`update on id ${req.params.id} with body
+${JSON.stringify(req.body)}`)
+try {
+let toUpdate = await racquet.findById( req.params.id)
+// Do updates of properties
+if(req.body.Racquet_type)
+toUpdate.Racquet_type = req.body.Racquet_type;
+if(req.body.Racquet_usedfor) toUpdate.Racquet_usedfor = req.body.Racquet_usedfor;
+if(req.body.Racquet_cost) toUpdate.Racquet_cost = req.body.Racquet_cost;
+let result = await toUpdate.save();
+console.log("Sucess " + result)
+res.send(result)
+} catch (err) {
+res.status(500)
+res.send(`{"error": ${err}: Update for id ${req.params.id}
+failed`);
+}
 };
