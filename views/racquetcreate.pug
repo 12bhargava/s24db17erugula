@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  h1= title
+  form(id='racquetForm', action="/resource/racquet", method="POST")
+    div.form-group
+      label.racquetAttr(for='Racquet_type') racquet type
+      input#racquet_type(type='text', name='Racquet_type')
+    div.form-group
+      label.racquetAttr(for='Racquet_usedfor') racquet used for
+      input#size(type='text', name='Racquet_usedfor')
+    div.form-group
+      label.racquetAttr(for='Racquet_cost') racquet cost is
+      input#cost(type='number', name='Racquet_cost')
+    input(type="submit")
+  script.
+    document.forms['racquetForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'POST',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.json(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Save succeeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Save failed " + error )
+      });
+    });
