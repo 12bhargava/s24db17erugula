@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+  - let racquetid = toShow._id
+  - let racquet_type = toShow.Racquet_type
+  - let racquetusedfor = toShow.Racquet_usedfor
+  - let racquetcost = toShow.Racquet_cost
+  div
+    div.row
+      div(class='racquetAttr mr-3') racquet ID is:
+      div #{racquetid}
+    div.row
+      div(class='racquetAttr mr-3') racquet Type is:
+      div #{racquet_type}
+    div.row
+      div(class='racquetAttr mr-3') racquet is used for:
+      div #{racquetusedfor}
+    div.row
+      div(class='racquetAttr mr-3') racquet Cost is:
+      div #{racquetcost}

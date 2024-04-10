@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  h1= title
+  - let racquetid = toShow._id
+  - let racquet_type = toShow.Racquet_type
+  - let racquetusedfor = toShow.Racquet_usedfor
+  - let racquetcost = toShow.Racquet_cost
+  div.row(class='mb-2')
+    div.mr-1 ID is
+    div #{racquetid}
+  - let actionid = "/resource/racquet/" + racquetid
+  form(id='racquetForm', action= actionid, method="PUT")
+    div.form-group
+      label.racquetAttr(for='Racquet_type') racquet type
+      input#Racquet_type(type='text', name='Racquet_type', value= racquet_type )
+    div.form-group
+      label.racquetAttr(for='.Racquet_usedfor') racquet used for
+      input#Racquet_usedfor(type='text', name='.Racquet_usedfor', value= racquetusedfor )
+    div.form-group
+      label.racquetAttr(for='Racquet_cost') racquet cost
+      input#Racquet_cost(type='number', name='Racquet_cost', value= racquetcost )
+    input(type="submit")
+  script.
+    document.forms['racquetForm'].addEventListener('submit', (event) => {
+      event.preventDefault();
+      // TODO do something here to show user that form is being submitted
+      fetch(event.target.action, {
+        method: 'PUT',
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+      }).then((resp) => {
+        return resp.text(); // or resp.text() or whatever the server sends
+      }).then((body) => {
+        alert("Update succeeded")
+        // TODO handle body
+      }).catch((error) => {
+        // TODO handle error
+        alert("Update failed " + error )
+      });
+    });
