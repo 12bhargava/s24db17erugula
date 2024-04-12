@@ -1,7 +1,13 @@
 extends layout
 
 block content
+  style.
+    body {
+      background-color: navy;
+    }
   h1= title
+    if (toShow == null)
+      h2 No instance to update
   - let racquetid = toShow._id
   - let racquet_type = toShow.Racquet_type
   - let racquetusedfor = toShow.Racquet_usedfor
@@ -13,13 +19,13 @@ block content
   form(id='racquetForm', action= actionid, method="PUT")
     div.form-group
       label.racquetAttr(for='Racquet_type') racquet type
-      input#Racquet_type(type='text', name='Racquet_type', value= racquet_type )
+      input#Racquet_type(type='text', name='Racquet_type', value= racquet_type)
     div.form-group
       label.racquetAttr(for='.Racquet_usedfor') racquet used for
-      input#Racquet_usedfor(type='text', name='.Racquet_usedfor', value= racquetusedfor )
+      input#Racquet_usedfor(type='text', name='.Racquet_usedfor', value= racquetusedfor)
     div.form-group
       label.racquetAttr(for='Racquet_cost') racquet cost
-      input#Racquet_cost(type='number', name='Racquet_cost', value= racquetcost )
+      input#Racquet_cost(type='number', name='Racquet_cost', value= racquetcost)
     input(type="submit")
   script.
     document.forms['racquetForm'].addEventListener('submit', (event) => {

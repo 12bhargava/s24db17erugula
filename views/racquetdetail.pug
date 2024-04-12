@@ -2,6 +2,8 @@ extends layout
 
 block content
   h1= title
+  if (toShow == null)
+    h2 No instance to detail
   - let racquetid = toShow._id
   - let racquet_type = toShow.Racquet_type
   - let racquetusedfor = toShow.Racquet_usedfor
