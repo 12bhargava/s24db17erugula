@@ -1,15 +1,47 @@
+//- extends layout
+
+//- block content
+//-   h1= title
+//-   - let items = results
+//-   div(class="container-fluid")
+//-     div(class="row m-1")
+//-       each item in items
+//-         - let destination = `dispatch(\"/racquet/update?id=${item._id}\")`
+//-         div(class="row-sm-2" , class ="m-1") Item #{item.Racquet_type}(#{item.Racquet_usedfor}) is #{item.Racquet_cost}
+//-         button.btn(class="btn-primary ml-1", onclick=destination) Update
+//-   script.
+//-     function dispatch(path){
+//-       window.location.href = path
+//-     }
 extends layout
- 
+
 block content
-  h1= title
-  - let item = results
-  div(class="container-fluid")
-    div(class="row")
-      each item, index in results  
-        div(class="col-sm-2",onclick=`buy(${index})`)
-          p #{item.Racquet_type}
-          p #{item.Racquet_usedfor}
-          p #{item.Racquet_cost}
-  script.
-    function buy(index) {
-    alert("You purchased item " + index);}
+    h1= title
+    p Welcome to #{title}
+
+    - let create = `dispatch(\"/racquet/create\")`
+    button.btn(class="btn-primary ml-1", onclick= create) Create
+
+    - let item = results
+
+    div(class="container-fluid")
+        div(class="row m-1")
+            each item, index in results
+                - let destination = `dispatch(\"/racquet/update?id=${item._id}\")`
+                - let detail = `dispatch(\"/racquet/detail?id=${item._id}\")`
+                - let remove = `dispatch(\"/racquet/delete?id=${item._id}\")`
+                div(class="col-sm-2")
+                    ul
+                        li #{item.Racquet_type}
+                        li #{item.Racquet_usedfor}
+                        li #{item.Racquet_cost}
+
+                button.btn(class="btn-danger ml-1", onclick= destination) Update
+                button.btn(class="btn-success ml-1", onclick= detail) Detail
+                button.btn(class="btn-primary ml-1", onclick= remove) Delete
+
+    script.
+        function dispatch(path){
+             window.location.href=path
+        }
+

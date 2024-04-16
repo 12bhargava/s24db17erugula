@@ -1,50 +1,101 @@
-extends layout
+//- extends layout
 
+//- block content
+//-   h1= title
+//-   if (toShow == null)
+//-     h2 No instance to delete
+//-   else
+//-     - let racquetid = toShow._id
+//-     - let racquet_type = toShow.Racquet_type
+//-     - let racquetusedfor = toShow.Racquet_usedfor
+//-     - let racquetcost = toShow.Racquet_cost
+//-     - let actionid = "/resource/racquet/" + racquetid
+//-     script.
+//-       let actionid = "#{actionid}";
+//-     div
+//-       div.row
+//-         div(class='racquetAttr mr-3') racquet ID is:
+//-         div #{racquetid}
+//-       div.row
+//-         div(class='racquetAttr mr-3') racquet Type is:
+//-         div #{racquet_type}
+//-       div.row
+//-         div(class='racquetAttr mr-3') racquet used for is:
+//-         div #{racquetusedfor}
+//-       div.row
+//-         div(class='racquetAttr mr-3') racquet Cost is:
+//-         div #{racquetcost}
+//-       button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+//-       button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+//-     script.
+//-       function cancel() {
+//-         // Go back to the home page for the racquet collection
+//-         window.location.href='/racquet';
+//-       }
+//-       function deleteOnid() {
+//-         console.log("starting delete");
+//-         // delete first
+//-         fetch(actionid, {
+//-           method: 'DELETE' // Don't need a body for the delete
+//-         }).then((resp) => {
+//-           return resp.text(); // or resp.text() or whatever the server sends
+//-         }).then((body) => {
+//-           alert("Delete succeeded");
+//-           window.location.href='/racquet';
+//-           // TODO handle body
+//-         }).catch((error) => {
+//-           // TODO handle error
+//-           alert("Delete failed " + error );
+//-         });
+//-       }
+extends layout
 block content
-  h1= title
-  if (toShow == null)
-    h2 No instance to delete
-  else
-    - let racquetid = toShow._id
-    - let racquet_type = toShow.Racquet_type
-    - let racquetusedfor = toShow.Racquet_usedfor
-    - let racquetcost = toShow.Racquet_cost
-    - let actionid = "/resource/racquet/" + racquetid
-    script.
-      let actionid = "#{actionid}";
-    div
-      div.row
-        div(class='racquetAttr mr-3') racquet ID is:
-        div #{racquetid}
-      div.row
-        div(class='racquetAttr mr-3') racquet Type is:
-        div #{racquet_type}
-      div.row
-        div(class='racquetAttr mr-3') racquet used for is:
-        div #{racquetusedfor}
-      div.row
-        div(class='racquetAttr mr-3') Costume Cost is:
-        div #{racquetcost}
-      button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
-      button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
-    script.
-      function cancel() {
-        // Go back to the home page for the costume collection
-        window.location.href='/racquet';
-      }
-      function deleteOnid() {
-        console.log("starting delete");
-        // delete first
-        fetch(actionid, {
-          method: 'DELETE' // Don't need a body for the delete
-        }).then((resp) => {
-          return resp.text(); // or resp.text() or whatever the server sends
-        }).then((body) => {
-          alert("Delete succeeded");
-          window.location.href='/racquet';
-          // TODO handle body
-        }).catch((error) => {
-          // TODO handle error
-          alert("Delete failed " + error );
-        });
-      }
+    h1= title
+    if (toShow == null)
+        h2 No instance to delete
+    else
+        - let racquetid = toShow._id
+        - let racquet_type = toShow.Racquet_type
+        - let Racquet_cost = toShow.Racquet_cost
+        - let Racquet_usedfor = toShow.Racquet_usedfor
+        - let actionid = "/resource/racquet/" + racquetid
+        script.
+            let actionid = "#{actionid}"
+        div
+            div.row
+                div(class='racquetAttr mr-3') racquet ID is:
+                div #{racquetid}
+            div.row
+                div(class='racquetAttr mr-3') racquet Type is:
+                div #{Racquet_type}
+            div.row
+                div(class='racquetAttr mr-3') racquet Size is:
+                div #{Racquet_usedfor}
+            div.row
+                div(class='racquetAttr mr-3') racquet Cost is:
+                div #{Racquet_cost}
+            button(class="btn btn-danger m-2" onclick="deleteOnid()") Delete
+            button(class="btn btn-secondary m-2" onclick="cancel()") Cancel
+        script.
+            function cancel() {
+                // Go back to the home page for the racquet collection
+                window.location.href='/racquets'
+            }
+        script.
+            function deleteOnid() {
+                console.log("starting delete")
+                // delete first
+                fetch(actionid, {
+                    method: 'DELETE' // Don't need a body for the delete
+                }).then((resp) => {
+                    return resp.json(); // or resp.text() or whatever the server sends
+                }).then((body) => {
+                    alert("Delete succeded")
+                    window.location.href='/racquet'
+                    // TODO handle body
+                }).catch((error) => {
+                    // TODO handle error
+                    alert("Delete failed " + error )
+                });
+            }
+
