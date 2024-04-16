@@ -1,4 +1,5 @@
 var racquet = require('../models/racquet');
+
 // List of all racquets
 exports.racquet_list = async function(req, res) {
 try{

@@ -1,16 +1,11 @@
 extends layout
-
 block content
-  h1= title
-  p Good Morning #{title}
-  button(type="button", class="btn btn-primary" onclick = "result()") Im a button
-  div(id="resul") Up the amount
-  script.
-    var value = 0;
-    var power = 1;
-    function result(){
-        value++;
-        power *= 2;
-        var res = `2 to the power of ${value} is ${power}`;
-        document.getElementById('resul').innerText = res;
-    }
+  if (!user)
+    a(href="/login") Login
+    br
+    a(href="/register") Register
+  if (user)
+    p You are currently logged in as #{user.username}
+    a(href="/racquet") Take me to racquet
+    br
+    a(href="/logout") Logout
